@@ -44,25 +44,16 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    Actors
+                                    @foreach ($actors as $actor)
+                                    <div class="checkbox form-inline">
+                                        <label><input type="checkbox" name="actors[{{$loop->index}}]" value="{{$actor->id}}"> {{$actor->first_name}} </label>
+                                        <input type="text" name="names_in_movie[{{$loop->index}}]" value="" placeholder="Name in Movie"  class="form-control ch_for hide">
+                                    </div>
 
-{{--                                    <div class="form-group">--}}
-{{--                                        Actors<select class="form-control" name="category">--}}
-{{--                                            @foreach ($actors as $actor)--}}
-{{--                                                <option value="{{ $actor->id }}"> {{ $actor->first_name . " " . $actor->last_name}} </option>--}}
-{{--                                            @endforeach--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
+                                    @endforeach
 
 
-{{--                                    <div class="form-group">--}}
-{{--                                        Image<input placeholder="Image" type="file" class="form-control" name="image" >--}}
-{{--                                    </div>--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        Image<input placeholder="Image" type="file" class="form-control" name="image" >--}}
-{{--                                    </div>--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        Image<input placeholder="Image" type="file" class="form-control" name="image" >--}}
-{{--                                    </div>--}}
 
                                     <div class="form-group">
                                         Release Date<input placeholder="Release Date" type="date" class="form-control" name="release_date" >
@@ -83,5 +74,21 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('scripts')
+    <script>
+
+        $('.checkbox input:checkbox').on('click', function(){
+            $(this).closest('.checkbox').find('.ch_for').toggleClass('hide');
+        })
+        $(document).ready(function () {
+            $('.checkbox input:checkbox').on('click', function(){
+                //alert("ok");
+                $(this).closest('.checkbox').find('.ch_for').show();
+            })
+        });
+    </script>
 
 @endsection
