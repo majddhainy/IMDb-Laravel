@@ -54,13 +54,22 @@
                                     @endforeach
 
 
-
                                     <div class="form-group">
                                         Release Date<input placeholder="Release Date" type="date" class="form-control" name="release_date" >
                                     </div>
 
                                     <div class="form-group">
                                         Production Date<input placeholder="Production Date" type="date" class="form-control" name="production_date" >
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        Movie Images (you can choose multiple images)<input multiple type="file" class="form-control" name="images[]" multiple/>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        Movie Videos (you can choose multiple videos)<input multiple type="file" class="form-control" name="videos[]" multiple/>
                                     </div>
 
                                     <div class="form-group">
@@ -78,6 +87,7 @@
 @endsection
 
 @section('scripts')
+
     <script>
 
         $('.checkbox input:checkbox').on('click', function(){

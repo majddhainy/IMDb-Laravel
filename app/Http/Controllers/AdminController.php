@@ -22,6 +22,7 @@ class AdminController extends Controller
 
     public function login(){
 
+        //validate user's input
         $this->validate(request(),[
             'email' => 'required|email',
             'password' => 'required|string',
@@ -75,7 +76,7 @@ class AdminController extends Controller
 
             if($user){
 
-                //generate a token and insert it into password_resets table,then email it to the user
+                //generate a token and insert it into password_resets table,then send it by email  to the user
                 $token = str_random(64);
 
                 DB::table('password_resets')->insert(
@@ -133,7 +134,7 @@ class AdminController extends Controller
 
         if($user){
             if($canChangePassword){
-                //remove the token from password_resets table then change user's password
+                //remove the token from password_resets  table (so it can be used once), then change user's password
                 DB::table('password_resets')
                     ->where('token','=',$request->reset_token)
                     ->where('email','=',$request->email)
@@ -145,7 +146,7 @@ class AdminController extends Controller
                 return redirect()->route('get-cms-login')->with('success','Your password has been changed!, please Login');
             }
 
-            //invalid/expired token
+            // invalid/expired token
             return redirect()->route('get-cms-forgot-password')->withErrors('Invalid/Expired Token !');
         }
 

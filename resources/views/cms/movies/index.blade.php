@@ -49,10 +49,10 @@
                                             {{ $movie->title }}
                                         </td>
                                         <td>
-                                            @if($movie->image_name)
-                                                <img src="{{ asset( "storage/movies-media/" . $movie->image_name) }}" width="90" height="110"/>
+                                            @if($movie->featuredPhoto)
+                                                <img src="{{ asset( "storage/movies-medias/" . $movie->featuredPhoto->media_name) }}" width="90" height="110"/>
                                             @else
-                                                <img src="{{ asset( "storage/movies-media/avatar.png") }}" width="90" height="110"/>
+                                                <img src="{{ asset( "storage/movies-medias/avatar.png") }}" width="90" height="110"/>
                                             @endif
                                         </td>
 

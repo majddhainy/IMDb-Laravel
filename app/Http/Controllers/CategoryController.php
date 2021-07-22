@@ -73,7 +73,7 @@ class CategoryController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -96,8 +96,12 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
-        $category->delete();
-        session()->flash('success' , 'Category deleted successfully');
-        return redirect()->route('categories.index');
+        if($category->movies()->count() != 0)
+            return redirect()->route('categories.index')->withErrors('Can not delete this category, it is included in some movies !');
+        else {
+            $category->delete();
+            session()->flash('success', 'Category deleted successfully');
+            return redirect()->route('categories.index');
+        }
     }
 }

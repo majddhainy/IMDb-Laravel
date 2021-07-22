@@ -19,6 +19,8 @@ class CreateMoviesTable extends Migration
             $table->string('description');
             $table->date('release_date');
             $table->date('production_date');
+            $table->float('rating_total')->default(0);
+            $table->integer('raters_count')->default(0);
             $table->timestamps();
         });
     }

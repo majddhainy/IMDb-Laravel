@@ -29,12 +29,13 @@
                             <div class="card-body">
                                 <form method="post"  action="{{route('movies.update',$movie->id)}}" enctype="multipart/form-data">
                                     {{ csrf_field() }}
+                                    {{ method_field('PUT') }}
                                     <div class="form-group">
                                         Title<input placeholder="" type="text" class="form-control" name="title" value="{{$movie->title}}">
                                     </div>
 
                                     <div class="form-group">
-                                        Description<textarea name="description" class="form-control">{{$movie->title}}</textarea>
+                                        Description<textarea name="description" class="form-control">{{$movie->description}}</textarea>
                                     </div>
 
                                     <div class="form-group">
@@ -47,8 +48,13 @@
                                     Actors
                                     @foreach ($actors as $actor)
                                         <div class="checkbox form-inline">
-                                            <label><input type="checkbox" name="actors[{{$loop->index}}]" value="{{$actor->id}}"> {{$actor->first_name}} </label>
-                                            <input type="text" name="names_in_movie[{{$loop->index}}]" value="" placeholder="Name in Movie"  class="form-control ch_for hide">
+                                            @if(array_key_exists($actor->id,$movie_actors))
+                                                <label><input checked type="checkbox" name="actors[{{$loop->index}}]" value="{{$actor->id}}"> {{$actor->first_name}} </label>
+                                                <input type="text" name="names_in_movie[{{$loop->index}}]"  placeholder="Name in Movie"  class="form-control ch_for" value="{{$movie_actors[$actor->id]}}">
+                                            @else
+                                                <label><input type="checkbox" name="actors[{{$loop->index}}]" value="{{$actor->id}}"> {{$actor->first_name}} </label>
+                                                <input type="text" name="names_in_movie[{{$loop->index}}]" value="" placeholder="Name in Movie"  class="form-control ch_for hide">
+                                            @endif
                                         </div>
 
                                     @endforeach
@@ -61,6 +67,28 @@
 
                                     <div class="form-group">
                                         Production Date<input placeholder="Production Date" type="date" class="form-control" name="production_date" value="{{$movie->production_date}}">
+                                    </div>
+
+
+
+                                    @foreach ($medias as $media)
+                                        @if($loop->index == 0)Movie's Current Media (check the ones you want to delete) @endif
+                                        <div class="checkbox form-inline">
+                                            <label><input type="checkbox" name="medias_to_delete_ids[{{$loop->index}}]" value="{{$media->id}}">
+                                                @if($media->type == "image")<img src="{{ asset( "storage/movies-medias/" . $media->media_name) }}" width="120" height="120"/>@endif
+                                                @if($media->type == "video")<video width="120" height="120" controls><source src="{{URL::asset( "storage/movies-medias/" . $media->media_name) }}" type="video/mp4">Your browser does not support the video tag.</video>@endif
+                                            </label>
+                                            <input type="text" name="medias_to_delete_names[{{$loop->index}}]" value="{{$media->media_name}}"   class="form-control  hide">
+                                        </div>
+                                    @endforeach
+
+                                    <div class="form-group">
+                                        Movie New Images (you can choose multiple images)<input multiple type="file" class="form-control" name="images[]" multiple/>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        Movie New Videos (you can choose multiple videos)<input multiple type="file" class="form-control" name="videos[]" multiple/>
                                     </div>
 
                                     <div class="form-group">

@@ -19,7 +19,7 @@ class Movie extends Model
 
     public function actors()
     {
-        return $this->belongsToMany(Actor::class);
+        return $this->belongsToMany(Actor::class)->withPivot('name_in_movie');
     }
 
     public function medias()
@@ -30,5 +30,9 @@ class Movie extends Model
     public function ratings()
     {
         return $this->hasMany(Rating::class);
+    }
+
+    public function featuredPhoto() {
+        return $this->hasOne(Media::class)->where('type','image');
     }
 }

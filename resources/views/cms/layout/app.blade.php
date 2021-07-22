@@ -2,25 +2,21 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 
 <!------ Include the above in your HEAD tag ---------->
 <style>
-
     h1.page-header {
         margin-top: -5px;
     }
-
     .sidebar {
         padding-left: 0;
     }
-
     .main-container {
         background: #FFF;
         padding-top: 15px;
         margin-top: -20px;
     }
-
     .footer {
         width: 100%;
     }
@@ -45,20 +41,20 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-{{--            <form class="navbar-form navbar-left" method="GET" role="search">--}}
-{{--                <div class="form-group">--}}
-{{--                    <input type="text" name="q" class="form-control" placeholder="Search">--}}
-{{--                </div>--}}
-{{--                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>--}}
-{{--            </form>--}}
+            {{--            <form class="navbar-form navbar-left" method="GET" role="search">--}}
+            {{--                <div class="form-group">--}}
+            {{--                    <input type="text" name="q" class="form-control" placeholder="Search">--}}
+            {{--                </div>--}}
+            {{--                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>--}}
+            {{--            </form>--}}
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                       <b> {{auth()->user()->username}} </b>
+                        <b> {{auth()->user()->username}} </b>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-{{--                        <li class=""><a href="#">Other Link</a></li>--}}
-{{--                        <li class=""><a href="#">Other Link</a></li>--}}
+                        {{--                        <li class=""><a href="#">Other Link</a></li>--}}
+                        {{--                        <li class=""><a href="#">Other Link</a></li>--}}
 
                         <li><a href="{{ route('cms-logout') }}">Logout</a></li>
                     </ul>
