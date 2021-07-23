@@ -16,9 +16,6 @@ use App\Http\Controllers\ActorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MovieController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 //public cms routes
 Route::group(['prefix' => 'cms'], function () {
@@ -41,7 +38,26 @@ Route::group(['prefix' => 'cms' , 'middleware' => ['AdminAuth']], function () {
 });
 
 //public customer routes
+Route::group([], function () {
+    Route::get('/','CustomerController@home');
+    Route::get('/home','CustomerController@home')->name('home');
+    Route::get('movies','MovieController@get_movies')->name('get-movies');
+    Route::post('movies','MovieController@search_movies')->name('search-movies');
+    Route::get('movies/{id}','MovieController@show')->name('get-movie');
+    Route::get('actors','ActorController@get_actors')->name('get-actors');
+    Route::post('actors','ActorController@search_actors')->name('search-actors');
+    Route::get('register','CustomerController@get_register')->name('get-register');
+    Route::post('register','CustomerController@register')->name('register');
+    Route::get('login','CustomerController@get_login')->name('get-login');
+    Route::post('login','CustomerController@login')->name('login');
+    Route::get('logout','CustomerController@logout')->name('logout');
+    Route::get('forgot-password','CustomerController@get_forgot_password')->name('get-forgot-password');
+    Route::post('forgot-password','CustomerController@forgot_password')->name('forgot-password');
+    Route::get('/reset-password/{token}', 'CustomerController@get_reset_password')->name('get-reset-password');;
+    Route::post('/reset-password', 'CustomerController@reset_password')->name('reset-password');
+});
 
 
 //private customer routes
+//rate a movie
 

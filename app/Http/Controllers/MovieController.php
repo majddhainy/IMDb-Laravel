@@ -117,11 +117,13 @@ class MovieController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show($id)
     {
-        //
+
+        $movie = Movie::with('categories')->with('actors')->with('medias')->find($id);
+        return view('movies.show')->with('movie',$movie);
     }
 
     /**
@@ -300,5 +302,16 @@ class MovieController extends Controller
 
         session()->flash('success', 'Actor deleted successfully');
         return redirect()->route('movies.index');
+    }
+
+    public function get_movies(){
+        $movies = Movie::with('featuredPhoto')->orderBy('release_date', 'desc')->paginate(3);
+        return view('movies.index')->with('movies',$movies);
+    }
+
+    public function search_movies(Request $request){
+        $movies = Movie::with('featuredPhoto')->where('title','LIKE','%' . $request->title . '%')->orderBy('release_date', 'desc')->paginate(5);
+        session()->flash('success', 'Displaying Search Results');
+        return view('movies.index')->with('movies',$movies);
     }
 }

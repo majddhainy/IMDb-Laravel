@@ -17,7 +17,7 @@ class AdminController extends Controller
         if(!Auth::check())
                 return view('cms.login');
             else
-                return redirect('/home');
+                return redirect()->route('cms-home');
     }
 
     public function login(){

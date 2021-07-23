@@ -171,4 +171,16 @@ class ActorController extends Controller
             return redirect()->route('actors.index');
         }
     }
+
+    public function get_actors(){
+        $actors =  Actor::paginate(3);
+        return view('actors.index')->with('actors',$actors);
+    }
+
+    public function search_actors(Request $request){
+        //dd($request->name);
+        $actors = Actor::whereRaw("concat(first_name, ' ', last_name) LIKE '%?%' ",[$request->name])->get();
+        dd($actors);
+        return view('actors.index')->with('actors',$actors);
+    }
 }
