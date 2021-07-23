@@ -50,6 +50,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Image</th>
+                                        <th scope="col">Gender</th>
                                         <th scope="col">Date Of Birth</th>
                                     </tr>
                                     </thead>
@@ -69,6 +70,7 @@
                                                 @endif
                                             </td>
 
+                                            <td> {{ $actor->gender }} </td>
                                             <td> {{ $actor->date_of_birth }} </td>
 
                                         </tr>

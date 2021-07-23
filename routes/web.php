@@ -59,5 +59,5 @@ Route::group([], function () {
 
 
 //private customer routes
-//rate a movie
+Route::post('movie/{id}','MovieController@rate_movie')->name('rate-movie')->middleware('CustomerAuth');
 

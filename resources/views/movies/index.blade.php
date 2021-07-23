@@ -72,7 +72,7 @@
                                             @endif
                                         </td>
 
-                                        <td> {{ $movie->release_date }} </td>
+                                        <td> @if($movie->rating_total != 0 && $movie->raters_count != 0) {{$movie->rating_total/$movie->raters_count}}/10 @else No Rating Yet @endif</td>
                                         <td class="white-space: nowrap">
                                             <a href="{{route('get-movie',$movie->id)}}" class="btn btn-primary btn-sm mx-2 float-right">Show</a>
                                         </td>

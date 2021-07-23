@@ -29,15 +29,15 @@
                             <div class="card-body">
                                 <form>
                                     <div class="form-group">
-                                        <b>Title</b><input disabled placeholder="" type="text" class="form-control" name="title" value="{{$movie->title}}">
+                                        <b>Title</b><input disabled placeholder="" type="text" class="form-control" value="{{$movie->title}}">
                                     </div>
 
                                     <div class="form-group">
-                                      <b>Description</b><textarea disabled name="description" class="form-control">{{$movie->description}}</textarea>
+                                      <b>Description</b><textarea disabled  class="form-control">{{$movie->description}}</textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <b>Categories</b><select disabled class="form-control" name="categories[]" multiple>
+                                        <b>Categories</b><select disabled class="form-control"  multiple>
                                             @foreach ($movie->categories as $category)
                                                 <option    value="{{ $category->id }}"> {{ $category->name }} </option>
                                             @endforeach
@@ -55,11 +55,11 @@
 
 
                                     <div class="form-group">
-                                        <b>Release Date</b><input disabled placeholder="Release Date" type="date" class="form-control" name="release_date" value="{{$movie->release_date}}">
+                                        <b>Release Date</b><input disabled placeholder="Release Date" type="date" class="form-control"  value="{{$movie->release_date}}">
                                     </div>
 
                                     <div class="form-group">
-                                        <b>Production Date</b> <input  disabled placeholder="Production Date" type="date" class="form-control" name="production_date" value="{{$movie->production_date}}">
+                                        <b>Production Date</b> <input  disabled placeholder="Production Date" type="date" class="form-control"  value="{{$movie->production_date}}">
                                     </div>
 
 
@@ -73,10 +73,32 @@
                                     @endforeach
 
 
-
                                     <div class="form-group">
-                                        <button class="btn btn-success float-right" type="submit">Update Movie</button>
+                                        <b>Rating</b><input disabled placeholder="" type="text" class="form-control" value="@if($movie->rating_total != 0 && $movie->raters_count != 0) {{$movie->rating_total/$movie->raters_count}}/10 @else No Rating Yet @endif">
                                     </div>
+
+                                </form>
+
+
+
+                                    <form method="post"  action="{{route('rate-movie',$movie->id)}}" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+
+                                        <div class="form-group">
+                                            <b>Value</b><select name="value" class="form-control" >
+                                                @for($i=1;$i<=10;$i++)
+                                                    <option    value="{{ $i }}"> {{ $i }} </option>
+                                                @endfor
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button class="btn btn-success float-right" type="submit">Rate Movie</button>
+                                        </div>
+                                    </form>
+
+
+
                             </div>
 
                         </div>

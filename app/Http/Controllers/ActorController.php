@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 
@@ -178,9 +179,16 @@ class ActorController extends Controller
     }
 
     public function search_actors(Request $request){
-        //dd($request->name);
-        $actors = Actor::whereRaw("concat(first_name, ' ', last_name) LIKE '%?%' ",[$request->name])->get();
-        dd($actors);
+        $this->validate($request,[
+            'name' => 'required|string|max:255'
+        ]);
+
+
+        //does not work in this laravel version
+        //$actors = Actor::whereRaw("concat(first_name, ' ', last_name) LIKE '%:name%' ",['name' => $request->name])->get();
+        //$actors = DB::raw('select * from actors where concat(first_name, \' \', last_name) LIKE :name', ['name' => $request->name]);
+
+        $actors = Actor::where('first_name','LIKE','%' . $request->name . '%')->orWhere('last_name','LIKE','%' . $request->name . '%')->paginate(5);
         return view('actors.index')->with('actors',$actors);
     }
 }

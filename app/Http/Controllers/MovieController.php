@@ -310,8 +310,41 @@ class MovieController extends Controller
     }
 
     public function search_movies(Request $request){
+        $this->validate($request,[
+            'title' => 'required|string|max:255'
+        ]);
         $movies = Movie::with('featuredPhoto')->where('title','LIKE','%' . $request->title . '%')->orderBy('release_date', 'desc')->paginate(5);
         session()->flash('success', 'Displaying Search Results');
         return view('movies.index')->with('movies',$movies);
+    }
+
+    public function rate_movie($id,Request $request){
+        //validate rating value is positive integer between 1 and 10
+        $this->validate($request,[
+            'value' => 'required|integer|min:1|max:10'
+        ]);
+
+        //find the movie and the logged in user
+        $movie = Movie::find($id);
+        $user = auth()->user();
+
+
+        if($movie) {
+            //check if this user already rated this movie before
+            $rated_before = $movie->ratings()->where('user_id',$user->id)->first();
+            if(!$rated_before) {
+                $movie->ratings()->create([
+                    'user_id' => $user->id,
+                    'value' => $request->value,
+                ]);
+                $movie->rating_total += $request->value;
+                $movie->raters_count += 1;
+                $movie->save();
+                session()->flash('success', 'Done, You have rated this movie successfully!');
+                return redirect()->route('get-movie', $movie->id);
+            }
+
+            return redirect()->route('get-movie', $movie->id)->withErrors('Are you playing? you have already rated this movie!');
+        }
     }
 }

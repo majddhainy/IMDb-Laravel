@@ -36,6 +36,7 @@ class CustomerController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
+        //attach customer role
         $user->roles()->attach(2);
         $user->save();
 
